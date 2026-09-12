@@ -1,0 +1,30 @@
+[package]
+name = "azeroth-overseer"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "overseer"
+path = "src/main.rs"
+
+[[bin]]
+name = "extract_dbc"
+path = "tools/extract_dbc.rs"
+
+[dependencies]
+tokio = { version = "1", features = ["full"] }
+axum = { version = "0.7", features = ["ws"] }
+tower-http = { version = "0.5", features = ["fs"] }
+sqlx = { version = "0.8", default-features = false, features = ["runtime-tokio-rustls", "mysql", "macros"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+toml = "0.8"
+thiserror = "2"
+tracing = "0.1"
+tracing-subscriber = "0.3"
+wow_dbc = { version = "0.3", features = ["wrath"] }
+wow-mpq = "0.7"
+
+[profile.release]
+opt-level = 3
+lto = true
