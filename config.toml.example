@@ -1,0 +1,16 @@
+# Copy this file to config.toml (gitignored) and fill in real values.
+# Same read-only account already created for wow-gm-console works fine here --
+# it's already scoped SELECT-only to acore_world + acore_characters.
+
+[database]
+host = "127.0.0.1"
+port = 3307
+database = "acore_world"
+username = "gmconsole_ro"
+password = "your-password-here"
+
+[server]
+# How often (seconds) to poll the database for changes.
+poll_interval_secs = 4
+# Port the local web server listens on.
+http_port = 7777
