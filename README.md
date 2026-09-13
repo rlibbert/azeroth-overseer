@@ -65,11 +65,21 @@ This writes `data/achievement_names.json`, `data/zone_names.json`, and `data/map
 
 **4. Run it:**
 
+For development:
+
 ```bash
 cargo run --bin overseer
 ```
 
-Open `http://localhost:7777` (or whatever `http_port` you set) in a browser. For an actual presentation, go full-screen (F11 in most browsers).
+Open `http://localhost:7777` (or whatever `http_port` you set) in a browser and go full-screen (F11).
+
+For an actual presentation, use the launch script instead — it builds a release binary, starts the server, waits for it to come up, and opens a dedicated kiosk-mode browser window (no address bar, no tabs, no accidental navigation):
+
+```bash
+./launch.sh
+```
+
+It picks up whichever of Chrome/Chromium/Firefox is on your `PATH` (Chrome/Chromium preferred). Ctrl+C in the terminal running it stops the server too. If something's already listening on the configured port, it assumes the server is already running and just opens the browser, leaving that process alone.
 
 ## Making the event feed livelier
 
@@ -105,4 +115,3 @@ Each bot's dot is placed using AzerothCore's own world-to-grid math (`SIZE_OF_GR
 - No real map imagery — see above.
 - Boss-kill and chat channels can be silent for an entire presentation depending on what the bots are actually doing; don't rely on them as the backbone of a demo.
 - Single-server, single-profile by design (unlike wow-gm-console) — this is a presentation tool for one server, not a multi-server admin console.
-- No fullscreen/kiosk launch script yet.
