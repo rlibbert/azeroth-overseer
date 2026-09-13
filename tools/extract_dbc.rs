@@ -1,17 +1,18 @@
-//! One-time local utility: extracts real achievement and zone names from
-//! the user's own WoW 3.3.5a client MPQ archives, so the presentation
+//! One-time local utility: extracts real achievement, zone, and map names
+//! from the user's own WoW 3.3.5a client MPQ archives, so the presentation
 //! console never has to guess/hallucinate display text. Run once:
 //!
 //!   cargo run --bin extract_dbc -- /path/to/WoWClient
 //!
-//! Writes data/achievement_names.json and data/zone_names.json.
+//! Writes data/achievement_names.json, data/zone_names.json, and
+//! data/map_names.json.
 
 use std::collections::HashMap;
 use std::env;
 use std::fs;
 use std::path::{Path, PathBuf};
 
-use wow_dbc::wrath_tables::{achievement, area_table};
+use wow_dbc::wrath_tables::{achievement, area_table, map};
 use wow_dbc::DbcTable;
 
 /// MPQs searched in override order (later entries win if a file exists in
@@ -93,6 +94,19 @@ fn main() {
     }
     println!("  parsed {} named zones", zone_names.len());
 
+    println!("Extracting Map.dbc...");
+    let map_bytes = find_dbc_bytes(&client_root, "Map.dbc").expect("Map.dbc not found in any searched MPQ");
+    let map_table = map::Map::read(&mut map_bytes.as_slice()).expect("failed to parse Map.dbc");
+
+    let mut map_names: HashMap<u32, String> = HashMap::new();
+    for row in map_table.rows() {
+        let name = row.map_name_lang.en_gb.clone();
+        if !name.is_empty() {
+            map_names.insert(row.id.id as u32, name);
+        }
+    }
+    println!("  parsed {} named maps", map_names.len());
+
     fs::create_dir_all("data").expect("failed to create data/ directory");
     fs::write(
         "data/achievement_names.json",
@@ -104,6 +118,8 @@ fn main() {
         serde_json::to_string_pretty(&zone_names).unwrap(),
     )
     .expect("failed to write zone_names.json");
+    fs::write("data/map_names.json", serde_json::to_string_pretty(&map_names).unwrap())
+        .expect("failed to write map_names.json");
 
-    println!("Wrote data/achievement_names.json and data/zone_names.json");
+    println!("Wrote data/achievement_names.json, data/zone_names.json, and data/map_names.json");
 }

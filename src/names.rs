@@ -4,18 +4,21 @@ use std::fs;
 pub struct NameTables {
     achievements: HashMap<u32, String>,
     zones: HashMap<u32, String>,
+    maps: HashMap<u32, String>,
 }
 
 impl NameTables {
     pub fn load() -> Self {
         let achievements = Self::load_map("data/achievement_names.json");
         let zones = Self::load_map("data/zone_names.json");
+        let maps = Self::load_map("data/map_names.json");
         println!(
-            "Loaded {} achievement names and {} zone names",
+            "Loaded {} achievement names, {} zone names, and {} map names",
             achievements.len(),
-            zones.len()
+            zones.len(),
+            maps.len()
         );
-        Self { achievements, zones }
+        Self { achievements, zones, maps }
     }
 
     fn load_map(path: &str) -> HashMap<u32, String> {
@@ -43,5 +46,9 @@ impl NameTables {
 
     pub fn zone_name(&self, id: u32) -> String {
         self.zones.get(&id).cloned().unwrap_or_else(|| format!("Zone #{id}"))
+    }
+
+    pub fn map_name(&self, id: u32) -> String {
+        self.maps.get(&id).cloned().unwrap_or_else(|| format!("Map #{id}"))
     }
 }

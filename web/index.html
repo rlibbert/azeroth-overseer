@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Azeroth Overseer</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<canvas id="rain"></canvas>
+<div id="vignette"></div>
+<div class="scanlines"></div>
+
+<div id="bot-tooltip" hidden>
+	<div class="bot-tooltip-name"></div>
+	<div class="bot-tooltip-class"></div>
+	<div class="bot-tooltip-zone"></div>
+</div>
+
+<div id="boss-banner" hidden>
+	<div class="boss-banner-inner">
+		<span class="skull">&#9760;</span>
+		<span id="boss-banner-text">BOSS DEFEATED</span>
+		<span class="skull">&#9760;</span>
+	</div>
+</div>
+
+<div id="app">
+	<header>
+		<div>
+			<div class="title">AZEROTH OVERSEER<span class="cursor">&nbsp;</span></div>
+			<div class="subtitle">observing the population &mdash; do not interfere</div>
+		</div>
+		<div id="status-badge" class="disconnected">LINK: OFFLINE</div>
+	</header>
+
+	<div id="stage">
+		<div id="grid-panel" class="panel">
+			<div class="panel-title">agent field &mdash; azeroth</div>
+			<div id="continent-grid">
+				<div class="continent-quadrant" data-map="0">
+					<canvas class="radar-canvas"></canvas>
+					<canvas class="link-canvas"></canvas>
+					<div class="bot-layer"></div>
+					<div class="continent-label">Eastern Kingdoms <span class="continent-count">(0)</span></div>
+				</div>
+				<div class="continent-quadrant" data-map="1">
+					<canvas class="radar-canvas"></canvas>
+					<canvas class="link-canvas"></canvas>
+					<div class="bot-layer"></div>
+					<div class="continent-label">Kalimdor <span class="continent-count">(0)</span></div>
+				</div>
+				<div class="continent-quadrant" data-map="571">
+					<canvas class="radar-canvas"></canvas>
+					<canvas class="link-canvas"></canvas>
+					<div class="bot-layer"></div>
+					<div class="continent-label">Northrend <span class="continent-count">(0)</span></div>
+				</div>
+				<div class="continent-quadrant" data-map="530">
+					<canvas class="radar-canvas"></canvas>
+					<canvas class="link-canvas"></canvas>
+					<div class="bot-layer"></div>
+					<div class="continent-label">Outland <span class="continent-count">(0)</span></div>
+				</div>
+			</div>
+		</div>
+
+		<div id="ticker-panel" class="panel">
+			<div class="panel-title">event feed</div>
+			<div id="ticker"></div>
+		</div>
+	</div>
+
+	<div id="side">
+		<div id="stats-panel" class="panel">
+			<div class="panel-title">telemetry</div>
+			<div class="stat-row"><span>Agents Online</span><span class="value" id="stat-online">&mdash;</span></div>
+			<div class="stat-row"><span>Average Level</span><span class="value" id="stat-avglevel">&mdash;</span></div>
+			<div class="stat-row"><span>Achievements (session)</span><span class="value" id="stat-achievements">0</span></div>
+			<div class="stat-row"><span>Level-ups (session)</span><span class="value" id="stat-levelups">0</span></div>
+			<div class="stat-row"><span>Quests (session)</span><span class="value" id="stat-quests">0</span></div>
+			<div class="stat-row"><span>Notable Items (session)</span><span class="value" id="stat-items">0</span></div>
+			<div class="stat-row"><span>Gathering (session)</span><span class="value" id="stat-gathering">0</span></div>
+			<div class="stat-row"><span>Boss Kills (session)</span><span class="value" id="stat-bosskills">0</span></div>
+			<div class="stat-row"><span>Deaths (session)</span><span class="value" id="stat-deaths">0</span></div>
+			<div class="stat-row"><span>Uptime</span><span class="value" id="stat-uptime">00:00:00</span></div>
+		</div>
+
+		<div id="legend-panel" class="panel">
+			<div class="panel-title">class legend</div>
+			<div id="legend"></div>
+		</div>
+	</div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

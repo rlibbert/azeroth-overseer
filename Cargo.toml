@@ -14,7 +14,7 @@ path = "tools/extract_dbc.rs"
 [dependencies]
 tokio = { version = "1", features = ["full"] }
 axum = { version = "0.7", features = ["ws"] }
-tower-http = { version = "0.5", features = ["fs"] }
+tower-http = { version = "0.5", features = ["fs", "set-header"] }
 sqlx = { version = "0.8", default-features = false, features = ["runtime-tokio-rustls", "mysql", "macros"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
